@@ -1,84 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Create a Fat Frog - Fat Frog Generator</title>
   <!-- Fun retro font -->
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
   <style>
-    /* ====== BODY & GLOBAL STYLES ====== */
-    body {
-      font-family: 'Press Start 2P', cursive;
-      /* Pastel gradient with an optional background image */
-      background: linear-gradient(135deg, #fff6e8, #f6f9ff),
-                  url('https://yourimageurl.com/frog-pond-background.jpg'); /* Replace with your own frog-themed image */
-      background-repeat: no-repeat;
-      background-size: cover;
-      background-blend-mode: lighten;
-      color: #333;
-      text-align: center;
+    /* ========== FROG-THEMED COLOR PALETTE ========== */
+    :root {
+      --background-start: #f0ffe3; /* pale green */
+      --background-end: #d0fac0;   /* soft mint */
+      --accent-color: #4b9144;     /* froggy green */
+      --highlight-color: #9ced73;  /* bright lettuce green */
+      --text-color: #333;
+    }
+
+    /* ========== GLOBAL RESET & BODY ========== */
+    * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
-    
+
+    body {
+      font-family: 'Press Start 2P', cursive;
+      background: linear-gradient(135deg, var(--background-start), var(--background-end));
+      color: var(--text-color);
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
     a {
       text-decoration: none;
+      color: inherit;
+      transition: color 0.3s ease;
     }
-    
-    /* ====== HERO SECTION ====== */
+
+    /* ========== HERO SECTION ========== */
     .hero {
-      padding: 40px 20px;
+      padding: 60px 20px 40px 20px;
     }
     .hero h1 {
       font-size: 2.5em;
-      color: #30475e; /* Deep slate-blue */
-      text-shadow: 2px 2px 3px rgba(255, 255, 255, 0.7);
+      color: var(--accent-color);
+      text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.15);
       margin-bottom: 20px;
     }
     .hero p {
-      font-size: 1.1em;
-      margin: 20px auto;
+      font-size: 1em;
       max-width: 600px;
-      line-height: 1.4;
-      color: #555;
+      margin: 20px auto;
+      line-height: 1.5;
+      color: var(--text-color);
     }
     .hero .links {
-      margin-top: 20px;
+      margin-top: 30px;
     }
     .hero a {
-      color: #ff686b; /* Soft red/pink */
-      font-size: 0.9em;
+      display: inline-block;
       margin: 0 10px;
-      padding: 6px 8px;
-      border-radius: 4px;
-      transition: all 0.3s ease;
+      padding: 6px 12px;
+      font-size: 0.8em;
+      border-radius: 6px;
+      background-color: rgba(255,255,255,0.2);
+      color: var(--accent-color);
+      transition: background-color 0.3s, transform 0.3s;
     }
     .hero a:hover {
-      background: #ff686b;
-      color: #fff;
+      background-color: rgba(255,255,255,0.4);
+      transform: translateY(-2px);
     }
-    /* Decorative emoji before navigation links */
+    /* Add frog emojis in the nav links */
     .hero a[href="#how-it-works"]::before {
       content: "🐸 ";
     }
     .hero a[href="#frog-lore"]::before {
-      content: "🌀 ";
+      content: "🪷 ";
     }
 
-    /* ====== WALLET CONNECT BUTTON ====== */
+    /* ========== WALLET CONNECT BUTTON ========== */
     .wallet-connect {
-      margin: 20px 0;
+      margin: 10px 0 30px 0;
     }
     .wallet-connect button {
       font-size: 1em;
       padding: 12px 24px;
-      background: #5141fa; /* Phantom Purple */
+      background: #5141fa; /* Phantom purple */
       color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(81, 65, 250, 0.2);
+      box-shadow: 0 6px 12px rgba(81, 65, 250, 0.2);
       transition: background 0.3s, transform 0.2s;
     }
     .wallet-connect button:hover {
@@ -88,64 +103,65 @@
     .wallet-address {
       margin-top: 10px;
       font-size: 0.85em;
-      color: #30475e;
+      color: var(--accent-color);
       word-break: break-all;
     }
 
-    /* ====== GENERATOR BOX ====== */
+    /* ========== GENERATOR BOX ========== */
     .generator {
-      margin: 30px auto;
+      margin: 0 auto 30px auto;
       padding: 20px;
-      background: rgba(255, 255, 255, 0.8);
-      border: 2px dashed #ff686b;
+      max-width: 500px;
+      background: rgba(255,255,255,0.8);
+      border: 2px dashed var(--highlight-color);
       border-radius: 15px;
       display: inline-block;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
     }
     .generator input {
       font-size: 1em;
-      padding: 8px;
-      width: 300px;
+      padding: 10px;
+      width: 70%;
       margin: 10px;
       border-radius: 8px;
-      border: 2px solid #ff686b;
+      border: 2px solid var(--highlight-color);
       outline: none;
       transition: border 0.3s;
     }
     .generator input:focus {
-      border-color: #30475e;
+      border-color: var(--accent-color);
     }
     .generator button {
       font-size: 1em;
-      padding: 10px 20px;
-      background: #ff686b;
+      padding: 12px 20px;
+      background: var(--highlight-color);
       color: #fff;
       border: none;
       border-radius: 8px;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(255, 104, 107, 0.2);
-      transition: background 0.3s, transform 0.2s;
+      box-shadow: 0 4px 8px rgba(156,237,115, 0.3);
+      transition: background 0.3s ease, transform 0.2s ease;
     }
     .generator button:hover {
-      background: #e35457;
+      background: #89d961;
       transform: translateY(-2px);
     }
 
-    /* ====== LOADING SPINNER ====== */
+    /* ========== LOADING SPINNER ========== */
     .loading-container {
       display: none;
       margin: 20px auto;
     }
     .loading-text {
-      color: #30475e;
       font-size: 1.2em;
       margin-top: 10px;
+      color: var(--accent-color);
     }
     .spinner {
       width: 50px;
       height: 50px;
-      border: 5px solid #fff6e8;
-      border-top: 5px solid #30475e;
+      border: 5px solid var(--background-start);
+      border-top: 5px solid var(--accent-color);
       border-radius: 50%;
       animation: spin 1s linear infinite;
       margin: 0 auto;
@@ -155,45 +171,43 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* ====== FROG SHOWCASE ====== */
+    /* ========== FROG SHOWCASE ========== */
     .gnome-showcase {
-      margin: 50px 0;
+      margin: 20px 0 30px 0;
     }
     .gnome-showcase h2 {
-      color: #30475e;
-      font-size: 1.8em;
+      color: var(--accent-color);
+      font-size: 1.6em;
       margin-bottom: 20px;
     }
 
-    /* ====== SINGLE FROG DISPLAY ====== */
+    /* ========== SINGLE FROG CARD ========== */
     .gnome {
       display: inline-block;
       margin: 20px;
       padding: 15px;
-      border: 2px solid #30475e;
+      border: 2px solid var(--accent-color);
       border-radius: 10px;
       background: #fff;
       color: #333;
       text-align: left;
-      font-size: 0.8em;
+      font-size: 0.85em;
       white-space: pre;
       overflow-x: auto;
-      position: relative;
       width: 300px;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.06);
       transition: transform 0.2s;
     }
     .gnome:hover {
-      transform: translateY(-2px);
+      transform: translateY(-3px);
     }
     .gnome p {
       margin: 5px 0;
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
-    /* ====== BUTTONS INSIDE FROG ====== */
-    .download-btn,
-    .share-btn {
+    /* ========== BUTTONS (DOWNLOAD/SHARE) ========== */
+    .download-btn, .share-btn {
       margin-top: 10px;
       font-size: 0.8em;
       padding: 8px 16px;
@@ -204,35 +218,35 @@
       transition: background 0.3s, transform 0.2s;
     }
     .download-btn {
-      background: #30475e;
+      background: var(--accent-color);
       color: #fff;
-      box-shadow: 0 2px 5px rgba(48, 71, 94, 0.2);
+      box-shadow: 0 3px 6px rgba(75,145,68, 0.2);
     }
     .download-btn:hover {
-      background: #445e7f;
+      background: #35723c;
       transform: translateY(-2px);
     }
     .share-btn {
       background: #1DA1F2; /* Twitter / X Blue */
       color: #fff;
-      box-shadow: 0 2px 5px rgba(29, 161, 242, 0.2);
+      box-shadow: 0 3px 6px rgba(29,161,242, 0.2);
     }
     .share-btn:hover {
       background: #40a9f3;
       transform: translateY(-2px);
     }
 
-    /* ====== LOG AREA ====== */
+    /* ========== LOG AREA ========== */
     .log {
       width: 90%;
       max-width: 600px;
-      background-color: #202020;
+      background-color: #333;
       font-family: monospace;
       font-size: 0.85em;
       padding: 10px;
       border: 1px solid #444;
       border-radius: 6px;
-      margin: 20px auto;
+      margin: 0 auto 40px auto;
       overflow-y: auto;
       max-height: 200px;
       white-space: pre-wrap;
@@ -252,32 +266,33 @@
       color: #1de9b6;
     }
 
-    /* ====== INFO SECTIONS ====== */
+    /* ========== INFO SECTION ========== */
     .info-section {
       max-width: 800px;
-      margin: 50px auto;
-      background: rgba(255, 255, 255, 0.7);
+      margin: 0 auto 50px auto;
+      background: rgba(255,255,255,0.8);
       padding: 30px;
       border-radius: 10px;
       text-align: left;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
     }
     .info-section h2 {
       text-align: center;
-      color: #30475e;
+      color: var(--accent-color);
       margin-bottom: 20px;
       font-size: 1.5em;
     }
     .info-section h3 {
-      color: #30475e;
+      color: var(--accent-color);
       margin-top: 30px;
       font-size: 1em;
+      margin-bottom: 10px;
     }
     .info-section p {
       line-height: 1.6;
       margin-bottom: 15px;
       font-size: 0.95em;
-      color: #444;
+      color: var(--text-color);
     }
     .info-section ol {
       margin-left: 20px;
@@ -285,13 +300,13 @@
       list-style: none;
       padding: 0;
     }
-    /* Frog bullet points for the How It Works list */
+    /* Frog bullet points */
     .info-section ol li::before {
       content: "🐸 ";
       margin-right: 5px;
     }
 
-    /* ====== LORE GRID ====== */
+    /* ========== LORE GRID ========== */
     .lore-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -303,27 +318,36 @@
       padding: 15px;
       border-radius: 8px;
       color: #333;
-      border: 2px solid #30475e;
+      border: 2px solid var(--accent-color);
       box-shadow: 0 2px 5px rgba(0,0,0,0.04);
     }
     .lore-item h4 {
       margin-top: 0;
-      color: #30475e;
+      color: var(--accent-color);
       font-size: 1em;
       margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
-    /* ====== FOOTER ====== */
+    /* ========== FOOTER ========== */
     footer {
+      margin-top: auto; /* push footer to the bottom if content is short */
       padding: 20px 0;
-      background: #30475e;
+      background: var(--accent-color);
       color: #fff;
-      margin-top: 50px;
       font-size: 0.8em;
+      box-shadow: 0 -4px 8px rgba(0,0,0,0.1);
     }
 
-    /* ====== RESPONSIVE ====== */
+    /* ========== RESPONSIVE ========== */
     @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2em;
+      }
+      .hero p {
+        font-size: 0.95em;
+      }
       .generator input {
         width: 80%;
       }
@@ -340,8 +364,8 @@
 
   <!-- Hero Section -->
   <div class="hero">
-    <h1>Create a Fat Frog</h1>
-    <p>Connect your Phantom wallet and adopt your very own chonky ASCII Frog!</p>
+    <h1>Create a Fat Frog 🐸</h1>
+    <p>Connect your Phantom wallet and discover your very own chonky ASCII Frog! Each one is unique, featuring special traits and comedic charm.</p>
     <div class="links">
       <a href="#how-it-works">How It Works</a>
       <a href="#frog-lore">Frog Species & Traits</a>
@@ -354,7 +378,7 @@
     <div id="wallet-address" class="wallet-address"></div>
   </div>
 
-  <!-- Generator -->
+  <!-- Generator Box -->
   <div class="generator" id="generator-section" style="display: none;">
     <label for="frog-id" style="display:none;">Frog ID</label>
     <input type="text" id="frog-id" placeholder="Enter your unique ID...">
@@ -367,7 +391,7 @@
     <p class="loading-text">Fetching Your Frog...</p>
   </div>
 
-  <!-- Fat Frog Showcase -->
+  <!-- Frog Showcase -->
   <div class="gnome-showcase" id="frog-showcase" style="display: none;">
     <h2>Your Frog Companion</h2>
     <!-- Generated Frog will appear here -->
@@ -379,65 +403,65 @@
   <!-- How It Works Section -->
   <div class="info-section" id="how-it-works">
     <h2>How It Works</h2>
-    <p>Each Fat Frog is uniquely generated from your wallet address and an optional unique ID you provide. Here’s a simple breakdown:</p>
+    <p>Each Fat Frog is uniquely generated using your Phantom wallet address and an optional ID. Here’s the froggy breakdown:</p>
     <ol>
       <li><strong>Connect Wallet:</strong> Use your Phantom wallet to connect securely.</li>
-      <li><strong>ID Input:</strong> Enter a unique ID or simply use your wallet address.</li>
-      <li><strong>Hashing Process:</strong> Your wallet address and ID transform into a numerical value using our special hashing function.</li>
+      <li><strong>ID Input:</strong> Provide a unique ID or stick to your wallet address alone.</li>
+      <li><strong>Hashing Process:</strong> Your wallet address and ID become a numerical hash via our special function.</li>
       <li><strong>Attribute Assignment:</strong> This determines your Frog’s species, skin color, personality trait, accessory, and “chonk level.”</li>
-      <li><strong>Deterministic Results:</strong> The same wallet and ID always produce the same Fat Frog—uniquely yours!</li>
+      <li><strong>Deterministic Results:</strong> The same wallet and ID will always produce the same comedic amphibian—uniquely yours!</li>
     </ol>
-    <p>This approach merges comedic charm with code magic, giving you a special ASCII Frog pal tied directly to your wallet and ID!</p>
+    <p>It’s a playful code-meets-comedy scenario, giving you a personalized ASCII Frog pal hopped right out of your wallet!</p>
   </div>
 
   <!-- Frog Species & Traits Section -->
   <div class="info-section" id="frog-lore">
     <h2>Frog Species & Traits</h2>
-    <p>From lazy pond loungers to adventurous bug hunters, each frog has unique quirks. Check out some of our ASCII-inspired amphibian friends:</p>
+    <p>From lazy pond loungers to adventurous bug-hunters, here are our known amphibian archetypes:</p>
 
     <!-- Lore Grid -->
     <div class="lore-grid">
       <div class="lore-item">
         <h4>Mellow Marsh Frog</h4>
-        <p>Calm and easygoing, prefers floating on lily pads without a worry in the world.</p>
+        <p>Calm and easygoing, a perfect lily pad lounger that can nap for hours on end.</p>
       </div>
       <div class="lore-item">
         <h4>Mountain Toad</h4>
-        <p>Chonky from the cold, sporting thicker skin. Can survive high altitudes and rocky terrain.</p>
+        <p>Strong and adaptable, thrives in colder altitudes with thick, sturdy skin.</p>
       </div>
       <div class="lore-item">
         <h4>Swamp Titan Frog</h4>
-        <p>Massive build with a hearty appetite, belches loudly to scare away predators.</p>
+        <p>Massive and loud, loves bellowing to scare away would-be threats from the swamp.</p>
       </div>
       <div class="lore-item">
         <h4>Bullriver Frog</h4>
-        <p>Vocal and proud, known for its thundering croaks echoing down the stream.</p>
+        <p>Vocal and confident, known for its deep croaks and boisterous presence by the riverbank.</p>
       </div>
       <div class="lore-item">
         <h4>Neon Tree Frog</h4>
-        <p>Vibrant colors that glow under moonlight, an expert at climbing and camouflage.</p>
+        <p>A bright spectacle that can climb with ease, glowing softly in moonlit jungles.</p>
       </div>
       <div class="lore-item">
         <h4>Desert Hopper</h4>
-        <p>Adapts to arid climates, storing water in its robust belly. Quick to leap, slow to starve.</p>
+        <p>Absorbs scarce water resources to maintain its girth, quick to leap when threatened.</p>
       </div>
       <div class="lore-item">
         <h4>Lotus Prince Frog</h4>
-        <p>Sit-upon-lotus posture, rumored to bring good luck to the pond with regal presence.</p>
+        <p>Often seen perched regally on lotus pads, rumored to bring fortune to those nearby.</p>
       </div>
       <div class="lore-item">
         <h4>Giggle Toad</h4>
-        <p>Odd laughter-like croaks, cheeky disposition, loves pranks on unsuspecting insects.</p>
+        <p>Its quirky croak sounds like laughter, forever pulling pranks on unsuspecting insects.</p>
       </div>
     </div>
 
-    <h3>Rarity and Collectibility</h3>
-    <p>Some Frogs develop special skins, silly hats, or incredibly high chonk levels. Keep creating different IDs to discover rare amphibious wonders!</p>
+    <h3>Rarity & Collectibility</h3>
+    <p>Special skins, fancy hats, or super-high chonk levels may appear. Keep trying new IDs to discover your dream fat frog!</p>
   </div>
 
   <!-- Footer -->
   <footer>
-    © 2025 Create a Fat Frog | Chonky Amphibians for the Digital Pond
+    © 2025 Create a Fat Frog | Hopping Into Digital Ponds With Style
   </footer>
 
   <!-- Script -->
@@ -486,7 +510,6 @@
         window.open("https://phantom.app/", "_blank");
       }
     };
-
     connectWalletButton.addEventListener('click', connectWallet);
 
     // Frog Archetypes + ASCII
@@ -584,7 +607,7 @@
       return input.length >= 4;
     }
 
-    // Simple hashing
+    // Simple hashing function
     function hashID(input) {
       let hash = 0;
       for (let i = 0; i < input.length; i++) {
@@ -595,7 +618,7 @@
       return Math.abs(hash);
     }
 
-    // Fat Frog creation
+    // Fat Frog Creation
     function generateFrog(hash) {
       const speciesIndex = hash % FROG_TYPES.length;
       const colorIndex = (hash >> 2) % SKIN_COLORS.length;
@@ -613,7 +636,7 @@
       };
     }
 
-    // Show/hide loading
+    // Show / Hide Loading
     function showLoading() {
       loadingContainer.style.display = 'block';
       frogShowcase.innerHTML = '<h2>Your Frog Companion</h2>';
@@ -626,7 +649,7 @@
     // Display Frog
     function displayFrog(frog) {
       const frogCard = document.createElement('div');
-      frogCard.className = 'gnome'; // reusing the same style class
+      frogCard.className = 'gnome';
       frogCard.innerHTML = `
 ${frog.asciiArt}
 <p><strong>Species:</strong> ${frog.species}</p>
@@ -655,7 +678,7 @@ ${frog.asciiArt}
       frogShowcase.style.display = 'block';
     }
 
-    // Download Frog Details
+    // Download Frog
     function downloadFrog(frog) {
       const frogDetails = `
 Frog Details:
@@ -678,7 +701,7 @@ ${frog.asciiArt}
 
     // Share on X (Twitter)
     function shareOnX(frog) {
-      const frogDetails = `I just adopted a new Fat Frog! 🐸
+      const message = `I just adopted a new Fat Frog! 🐸
 
 Species: ${frog.species}
 Skin Color: ${frog.skinColor}
@@ -689,7 +712,7 @@ Chonk Level: ${frog.chonkLevel}/100
 #FatFrogGenerator
 @FatFrogGenSol
       `;
-      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(frogDetails)}`;
+      const tweetUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(message)}`;
       window.open(tweetUrl, '_blank');
     }
 
@@ -702,13 +725,13 @@ Chonk Level: ${frog.chonkLevel}/100
       logArea.scrollTop = logArea.scrollHeight;
     }
 
-    // Check existing frog
+    // Check if Frog already exists
     function checkExistingFrog(walletAddress) {
       const frogData = localStorage.getItem(`frog_${walletAddress}`);
       if (frogData) {
         const existingFrog = JSON.parse(frogData);
         displayFrog(existingFrog);
-        logMessage("A Fat Frog already exists for this wallet.", "warning");
+        logMessage("A Fat Frog has already been created for this wallet.", "warning");
         generatorSection.style.display = 'none';
       }
     }
@@ -718,7 +741,7 @@ Chonk Level: ${frog.chonkLevel}/100
       localStorage.setItem(`frog_${walletAddress}`, JSON.stringify(frog));
     }
 
-    // Generate button event
+    // Generate Button Event
     generateButton.addEventListener('click', () => {
       if (!userWalletAddress) {
         alert('Please connect your Phantom wallet first!');
@@ -735,14 +758,14 @@ Chonk Level: ${frog.chonkLevel}/100
       const existingFrog = localStorage.getItem(`frog_${userWalletAddress}`);
       if (existingFrog) {
         alert('You already have a Fat Frog for this wallet.');
-        logMessage("Attempted to adopt multiple Frogs for the same wallet.", "warning");
+        logMessage("Attempted to adopt multiple Fat Frogs for the same wallet.", "warning");
         checkExistingFrog(userWalletAddress);
         return;
       }
 
       showLoading();
 
-      // Mimic asynchronous generation
+      // Mimic asynchronous creation
       setTimeout(() => {
         const combinedID = userWalletAddress + frogID;
         const hash = hashID(combinedID);
@@ -752,7 +775,6 @@ Chonk Level: ${frog.chonkLevel}/100
         displayFrog(newFrog);
         logMessage(`Frog "${newFrog.species}" adopted successfully.`, "success");
 
-        // Save the Frog to localStorage
         saveFrog(userWalletAddress, newFrog);
 
         // Hide the generator to prevent multiple Frogs
